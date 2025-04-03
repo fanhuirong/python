@@ -94,10 +94,12 @@ def rename_photos(folder_path):
                 print(f"处理文件 '{filename}' 时出错: {e}")
                 skipped_count += 1
         else:
-            skipped_count += 1
+            # 只有当文件是普通文件但不是支持的图片格式时才计入跳过数
+            if os.path.isfile(file_path):
+                skipped_count += 1
+                print(f"跳过非图片文件: {filename}")
     
     print(f"\n重命名完成! 已重命名 {renamed_count} 个文件，跳过 {skipped_count} 个文件。")
-
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         folder_path = sys.argv[1]
